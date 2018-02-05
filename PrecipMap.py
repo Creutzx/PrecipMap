@@ -1,12 +1,20 @@
 import arcpy
 
-mxd = arcpy.mapping.MapDocument(r"\\DEQHQ1\TMDL\TMDL_WR\MidCoast\GIS\Figures\Upper_Yaquina_Maps\Upper_Yaquina_TMDL_Blank_ME.mxd")
-df = arcpy.mapping.ListDataFrames(mxd, "Layers")[0]
+str_dir_main = r"\\DEQHQ1\TMDL\TMDL_WR\MidCoast\GIS\Figures\Upper_Yaquina_Maps"
+str_mxd_blank = r"Upper_Yaquina_TMDL_Blank_ME.mxd"
+str_df_cur = r"Layers"
+str_lyr_cur = r"UY_Precip.lyr"
+str_mxd_save = r"Upper_Yaquina_TMDL_UY_Precip_kmb.mxd"
 
-addLayer2 = arcpy.mapping.Layer(r"\\DEQHQ1\TMDL\TMDL_WR\MidCoast\GIS\Figures\Upper_Yaquina_Maps\UY_Precip.lyr")
+mxd = arcpy.mapping.MapDocument(str_dir_main + "\\" + str_mxd_blank)
+df = arcpy.mapping.ListDataFrames(mxd, str_df_cur)[0]
+
+addLayer2 = arcpy.mapping.Layer(str_dir_main + "\\" + str_lyr_cur)
 
 arcpy.mapping.AddLayer(df, addLayer2, "BOTTOM")
+arcpy.RefreshTOC()
+arcpy.RefreshActiveView()
 
-mxd.saveACopy(r"\\DEQHQ1\TMDL\TMDL_WR\MidCoast\GIS\Figures\Upper_Yaquina_Maps\Upper_Yaquina_TMDL_UY_Precip.mxd")
+mxd.saveACopy(str_dir_main + "\\" + str_mxd_save)
 
-del mxd, addLayer2
+del mxd, df, addLayer2
